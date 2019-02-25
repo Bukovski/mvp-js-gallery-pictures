@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "categoryName": "cities"
+  },
+  {
+    "id": 2,
+    "categoryName": "nature"
+  },
+  {
+    "id": 3,
+    "categoryName": "industrial"
+  },
+  {
+    "id": 4,
+    "categoryName": "daylight"
+  },
+  {
+    "id": 5,
+    "categoryName": "nightScape"
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "path": "city_1.jpg",
+    "name": "Busy Streets",
+    "category": [1, 5]
+  },
+  {
+    "id": 2,
+    "path": "nature_2.jpg",
+    "name": "Luminous night",
+    "category": [2, 5]
+  },
+  {
+    "id": 3,
+    "path": "city_3.jpg",
+    "name": "City wonders",
+    "category": [1, 4]
+  },
+  {
+    "id": 4,
+    "path": "industrial_1.jpg",
+    "name": "In production",
+    "category": [3]
+  },
+  {
+    "id": 5,
+    "path": "industrial_2.jpg",
+    "name": "Industrial site",
+    "category": [3, 4]
+  },
+  {
+    "id": 6,
+    "path": "nature_1.jpg",
+    "name": "Peaceful lake",
+    "category": [2, 4]
+  },
+  {
+    "id": 7,
+    "path": "city_2.jpg",
+    "name": "City lights",
+    "category": [1, 5]
+  },
+  {
+    "id": 8,
+    "path": "nature_3.jpg",
+    "name": "Dreamhouse",
+    "category": [2, 4]
+  },
+  {
+    "id": 9,
+    "path": "industrial_3.jpg",
+    "name": "Restless machines",
+    "category": [3]
+  }
+]
