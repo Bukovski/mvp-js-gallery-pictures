@@ -7,7 +7,7 @@ class GalleryPresenter {
   initialize() {
     this._model.readDataFromFiles();
   
-    this.rebuildButtonsFilter()
+    this.rebuildButtonsFilter();
   }
   
   async createButtonsFilter() {
@@ -21,10 +21,38 @@ class GalleryPresenter {
     this._view.showButtonsFilter(listHtml);
   }
   
+  //add active class for active button "filter category" after all buttons loaded
+  addActiveClassButtonsFilter() {
+    const buttonIndex = this._model.getButtonFilterIndex();
+    
+    this._view.addClassActiveButtonsFilter(buttonIndex);
+  }
+  
+  toggleActiveClassButtonsFilter() {
+    this._view.removeClassActiveButtonsFilter();
+    this.addActiveClassButtonsFilter();
+  }
+  
+  toggleButtonsFilter(event) {
+    const currentButton = $(event.target);
+    const isActive = currentButton.hasClass("filter__button--active");
+    let indexButton = currentButton.attr("data-filter");
+    if (!isActive) {
+      indexButton =  (indexButton === "all") ? 0 : indexButton;
+      
+      this._model.setButtonFilterIndex(indexButton, () => this.toggleActiveClassButtonsFilter());
+    }
+    
+    return false;
+  }
+  
   async rebuildButtonsFilter() {
     await this.createButtonsFilter();
-    this._view.toggleClassActiveButtonsFilter(0); //add active class for active button "filter category" after all buttons loaded
+    this.addActiveClassButtonsFilter();
+    
+    this._view.bindToggleButtonsFilter(this.toggleButtonsFilter.bind(this))
   }
+  
   
   
 }

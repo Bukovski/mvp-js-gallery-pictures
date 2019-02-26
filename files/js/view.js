@@ -12,7 +12,16 @@ class GalleryView {
     this.$filter.html(htmlList)
   }
   
-  toggleClassActiveButtonsFilter(index) {
-    this.$filter.find(".filter__button").eq(index).addClass("filter__button--active");
+  removeClassActiveButtonsFilter() {
+    this.$filter.find(".filter__button--active").removeClass("filter__button--active");
+  }
+  
+  addClassActiveButtonsFilter(index) {
+    this.$filter.find(".filter__button")
+      .eq(index).addClass("filter__button--active");
+  }
+  
+  bindToggleButtonsFilter(callback) {
+    this.$filter.on("click", ".filter__button", callback)
   }
 }

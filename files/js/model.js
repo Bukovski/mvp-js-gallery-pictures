@@ -2,6 +2,7 @@ class GalleryModel {
   constructor() {
     this._categoryData = [];
     this._pictureData = [];
+    this._buttonFilterIndex = 0;
   }
   
   readDataFromFiles() {
@@ -15,5 +16,16 @@ class GalleryModel {
   
   async getPicturesCollection() {
     return await this._pictureData;
+  }
+  
+  getButtonFilterIndex() {
+    return this._buttonFilterIndex;
+  }
+  setButtonFilterIndex(index, callback) {
+    this._buttonFilterIndex = index;
+    
+    if (callback) {
+      callback();
+    }
   }
 }
