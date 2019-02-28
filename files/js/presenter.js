@@ -63,10 +63,33 @@ class GalleryPresenter {
     const isActive = currentButton.hasClass("sort__button--active");
     let sortOrder = currentButton.attr("data-order");
   
-    if (!isActive) {
+    if (!isActive && validate.isSortOrder(sortOrder)) {
       this._model.setButtonSortOrder(sortOrder, () => this.toggleActiveClassButtonsSortOrder());
     }
   }
+  
+  //search input filter article
+  inputSearchChangeWatcher(event) {
+    const input = $(event.target);
+    const inputValue = input.val();
+    const maxLengthValue = input.attr("data-input-max");
+    
+    if (!validate.isTextAndNumbers(inputValue)) {
+      return input.val(validate.onlyTextAndNumbers(inputValue))
+    }
+    if (inputValue.length > maxLengthValue) {
+      return input.val(inputValue.substr(0, maxLengthValue))
+    }
+    
+    this._model.setInputTextSearch(inputValue) //TODO связять через Event
+  }
+  
+  //press button shuffle
+  toggleButtonSortShuffle(event) {
+    const currentButton = $(event.target);
+    console.log(currentButton) //TODO закинуть в Event откуда потом будем дергать
+  }
+  
   
   async buildButtonsFilter() {
     await this.createButtonsFilter();
@@ -75,5 +98,7 @@ class GalleryPresenter {
     
     this._view.bindToggleButtonsFilter(this.toggleButtonsFilter.bind(this));
     this._view.bindToggleButtonsOrderSort(this.toggleButtonsSortOrder.bind(this));
+    this._view.bindInputSearch(this.inputSearchChangeWatcher.bind(this));
+    this._view.bindToggleButtonShuffleSort(this.toggleButtonSortShuffle.bind(this));
   }
 }

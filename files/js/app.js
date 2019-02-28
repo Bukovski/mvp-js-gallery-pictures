@@ -4,6 +4,17 @@ const PATH = {
   DB_CATEGORY: "files/db/category.json"
 };
 
+const validate = {
+  isSortOrder(text) {
+    return [ "asc", "desc" ].includes(text)
+  },
+  isTextAndNumbers(value) {
+    return (/^[а-я\w\s]*$/gi.test(value));
+  },
+  onlyTextAndNumbers(value) {
+    return (value.replace(/[^а-я\w\s]*/gi, ""));
+  }
+};
 
 const model = new GalleryModel();
 const template = new Template();

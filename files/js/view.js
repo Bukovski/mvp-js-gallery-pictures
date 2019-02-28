@@ -2,8 +2,10 @@ class GalleryView {
   constructor(template) {
     this._template = template;
     this.$filter = $(".filter");
-    this.$sortOrderButton = $(".sort__button");
     this.$sortOrderGrid = $(".sort__grid");
+    this.$sortOrderButton = $(".sort__button");
+    this.$searchInput = $(".sort__search");
+    this.$sortShuffle = $(".sort__shuffle");
   }
   
   createListButtonsFilter(value, count) {
@@ -40,5 +42,13 @@ class GalleryView {
   
   bindToggleButtonsOrderSort(callback) {
     this.$sortOrderButton.on("click", callback)
+  }
+  
+  bindInputSearch(callback) {
+    this.$searchInput.on("input", callback)
+  }
+  
+  bindToggleButtonShuffleSort(callback) {
+    this.$sortShuffle.on("click", callback);
   }
 }

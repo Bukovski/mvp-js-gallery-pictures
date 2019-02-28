@@ -4,6 +4,7 @@ class GalleryModel {
     this._pictureData = [];
     this._buttonFilterIndex = 0;
     this._buttonSortOrder = "asc";
+    this._textInputSearch = "";
   }
   
   readDataFromFiles() {
@@ -34,10 +35,22 @@ class GalleryModel {
     return this._buttonSortOrder;
   }
   setButtonSortOrder(sortOrder, callback) {
+    
     this._buttonSortOrder = sortOrder;
     
     if (callback) {
       callback();
+    }
+  }
+  
+  getInputTextSearch() {
+    return this._textInputSearch;
+  }
+  setInputTextSearch(text, callback) {
+    this._textInputSearch = text;
+    
+    if (callback) {
+      callback(); //TODO замениь на Event. При вводе данных дергаем отображение записей и фильтруем их
     }
   }
 }
