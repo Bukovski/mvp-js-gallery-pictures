@@ -3,6 +3,7 @@ class GalleryModel {
     this._categoryData = [];
     this._pictureData = [];
     this._buttonFilterIndex = 0;
+    this._buttonSortOrder = "asc";
   }
   
   readDataFromFiles() {
@@ -23,6 +24,17 @@ class GalleryModel {
   }
   setButtonFilterIndex(index, callback) {
     this._buttonFilterIndex = index;
+    
+    if (callback) {
+      callback();
+    }
+  }
+  
+  getButtonSortOrder() {
+    return this._buttonSortOrder;
+  }
+  setButtonSortOrder(sortOrder, callback) {
+    this._buttonSortOrder = sortOrder;
     
     if (callback) {
       callback();

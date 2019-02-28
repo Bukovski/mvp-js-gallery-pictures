@@ -7,7 +7,7 @@ class GalleryPresenter {
   initialize() {
     this._model.readDataFromFiles();
   
-    this.rebuildButtonsFilter();
+    this.buildButtonsFilter();
   }
   
   async createButtonsFilter() {
@@ -28,6 +28,7 @@ class GalleryPresenter {
     this._view.addClassActiveButtonsFilter(buttonIndex);
   }
   
+  //remove active class before added active class for current button which pressed
   toggleActiveClassButtonsFilter() {
     this._view.removeClassActiveButtonsFilter();
     this.addActiveClassButtonsFilter();
@@ -37,22 +38,42 @@ class GalleryPresenter {
     const currentButton = $(event.target);
     const isActive = currentButton.hasClass("filter__button--active");
     let indexButton = currentButton.attr("data-filter");
+    
     if (!isActive) {
       indexButton =  (indexButton === "all") ? 0 : indexButton;
       
       this._model.setButtonFilterIndex(indexButton, () => this.toggleActiveClassButtonsFilter());
     }
-    
-    return false;
   }
   
-  async rebuildButtonsFilter() {
+  //sort order buttons (asc desc)
+  addActiveClassButtonsSortOrder() {
+    const sortOrder = this._model.getButtonSortOrder();
+    
+    this._view.addClassActiveButtonsOrderSort(sortOrder);
+  }
+  
+  toggleActiveClassButtonsSortOrder() {
+    this._view.removeClassActiveButtonsOrderSort();
+    this.addActiveClassButtonsSortOrder();
+  }
+  
+  toggleButtonsSortOrder(event) {
+    const currentButton = $(event.target);
+    const isActive = currentButton.hasClass("sort__button--active");
+    let sortOrder = currentButton.attr("data-order");
+  
+    if (!isActive) {
+      this._model.setButtonSortOrder(sortOrder, () => this.toggleActiveClassButtonsSortOrder());
+    }
+  }
+  
+  async buildButtonsFilter() {
     await this.createButtonsFilter();
     this.addActiveClassButtonsFilter();
+    this.addActiveClassButtonsSortOrder();
     
-    this._view.bindToggleButtonsFilter(this.toggleButtonsFilter.bind(this))
+    this._view.bindToggleButtonsFilter(this.toggleButtonsFilter.bind(this));
+    this._view.bindToggleButtonsOrderSort(this.toggleButtonsSortOrder.bind(this));
   }
-  
-  
-  
 }
