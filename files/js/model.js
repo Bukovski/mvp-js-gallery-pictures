@@ -50,7 +50,7 @@ class GalleryModel {
     this._textInputSearch = text;
     
     if (callback) {
-      callback(); //TODO замениь на Event. При вводе данных дергаем отображение записей и фильтруем их
+      callback();
     }
   }
 }

@@ -1,4 +1,8 @@
 class GalleryPresenter {
+
+}
+
+class ManagementPresenter {
   constructor(model, view) {
     this._model = model;
     this._view = view;
@@ -81,15 +85,14 @@ class GalleryPresenter {
       return input.val(inputValue.substr(0, maxLengthValue))
     }
     
-    this._model.setInputTextSearch(inputValue) //TODO связять через Event
+    this._model.setInputTextSearch(inputValue, () => console.log("Тут могла быть ваша рекламма", inputValue)); //TODO При вводе данных в инпут дергаем отображение отфильрованных картинок. Запихнуть вызов перерисовки в callback
   }
   
   //press button shuffle
   toggleButtonSortShuffle(event) {
     const currentButton = $(event.target);
-    console.log(currentButton) //TODO закинуть в Event откуда потом будем дергать
+    console.log("Опа чирик", currentButton) //TODO Рандомное отображение картинок при клие на кнопку SHUFFLE
   }
-  
   
   async buildButtonsFilter() {
     await this.createButtonsFilter();

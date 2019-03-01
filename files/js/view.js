@@ -1,4 +1,7 @@
 class GalleryView {
+
+}
+class ManagementView {
   constructor(template) {
     this._template = template;
     this.$filter = $(".filter");
