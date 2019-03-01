@@ -1,6 +1,35 @@
 class GalleryPresenter {
-
+  constructor(model, view) {
+    this._model = model;
+    this._view = view;
+  }
+  initialize() {
+    this._model.readDataFromFiles();
+  
+    this.buildGalleryPictures();
+  }
+  
+  async createListPicture() {
+    const pictures = await this._model.getPicturesCollection();
+    
+    const joinPictures = pictures.reduce((prev, picture) => {
+      picture.category = picture.category.join(",");
+      picture.path = PATH.IMAGE + picture.path;
+      picture.dataSort = picture.name.toLowerCase();
+      
+      return prev += this._view.createListPictures(picture)
+    }, "");
+    
+    this._view.showListPictures(joinPictures);
+  }
+  
+  async buildGalleryPictures() {
+    await this.createListPicture();
+  }
+  
 }
+
+
 
 class ManagementPresenter {
   constructor(model, view) {
@@ -8,8 +37,8 @@ class ManagementPresenter {
     this._view = view;
   }
   
-  initialize() {
-    this._model.readDataFromFiles();
+  initialize(presenter) {
+    presenter.initialize();
     
     this.initListeners();
     this.buildButtonsFilter();

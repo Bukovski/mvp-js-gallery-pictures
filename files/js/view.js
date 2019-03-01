@@ -1,9 +1,33 @@
 class GalleryView {
-
-}
-class ManagementView {
   constructor(template) {
-    this._template = template;
+    this.$content = $(".content");
+    
+  }
+  
+  itemListGallery(imageObj) {
+    const { path, name, id, category, dataSort } = imageObj;
+    
+    return `<div class="gallery" data-category="${ category }" data-sort="${ dataSort }">
+      <img class="gallery__img" src="${ path }" alt="${ name }">
+      <div class="gallery__position">${ id }</div>
+      <span class="gallery__title">${ name }</span>
+    </div>`
+  }
+  
+  createListPictures(dataObj) {
+    return this.itemListGallery(dataObj)
+  }
+  
+  showListPictures(htmlList) {
+    this.$content.html(htmlList)
+  }
+  
+}
+
+
+
+class ManagementView {
+  constructor() {
     this.$filter = $(".filter");
     this.$sortOrderGrid = $(".sort__grid");
     this.$sortOrderButton = $(".sort__button");
@@ -11,8 +35,12 @@ class ManagementView {
     this.$sortShuffle = $(".sort__shuffle");
   }
   
+  valueButtonFilter(value, count) {
+    return `<li class="filter__button" data-filter="${ count }">${ value }</li>`;
+  }
+  
   createListButtonsFilter(value, count) {
-    return this._template.valueButtonFilter(value, count);
+    return this.valueButtonFilter(value, count);
   }
   
   showButtonsFilter(htmlList) {

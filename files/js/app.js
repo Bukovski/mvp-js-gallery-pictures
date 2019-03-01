@@ -1,8 +1,7 @@
 const model = new GalleryModel();
-const template = new Template();
-const view = new ManagementView(template);
-const controller = new ManagementPresenter(model, view);
+const galleryPresenter = new GalleryPresenter(model, new GalleryView());
+const presenter = new ManagementPresenter(model, new ManagementView());
 
-const setView = () => controller.initialize();
+const setView = () => presenter.initialize(galleryPresenter);
 
 window.onload = setView;
