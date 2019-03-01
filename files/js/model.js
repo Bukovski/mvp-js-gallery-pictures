@@ -23,34 +23,28 @@ class GalleryModel {
   getButtonFilterIndex() {
     return this._buttonFilterIndex;
   }
-  setButtonFilterIndex(index, callback) {
+  setButtonFilterIndex(index) {
     this._buttonFilterIndex = index;
-    
-    if (callback) {
-      callback();
-    }
+  
+    customEvents.runListener(EVENT.ACTIVE_CLASS_BUTTON_FILTER);
   }
   
   getButtonSortOrder() {
     return this._buttonSortOrder;
   }
-  setButtonSortOrder(sortOrder, callback) {
+  setButtonSortOrder(sortOrder) {
     
     this._buttonSortOrder = sortOrder;
-    
-    if (callback) {
-      callback();
-    }
+  
+    customEvents.runListener(EVENT.BUTTONS_SORT_ORDER);
   }
   
   getInputTextSearch() {
     return this._textInputSearch;
   }
-  setInputTextSearch(text, callback) {
+  setInputTextSearch(text) {
     this._textInputSearch = text;
     
-    if (callback) {
-      callback();
-    }
+    customEvents.runListener(EVENT.INPUT_SEARCH_WATCHER, text);
   }
 }
