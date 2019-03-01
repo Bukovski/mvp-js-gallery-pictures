@@ -5,6 +5,8 @@ class GalleryModel {
     this._buttonFilterIndex = 0;
     this._buttonSortOrder = "asc";
     this._textInputSearch = "";
+    
+    this._galleryPositon = {};
   }
   
   readDataFromFiles() {
@@ -46,5 +48,13 @@ class GalleryModel {
     this._textInputSearch = text;
     
     customEvents.runListener(EVENT.INPUT_SEARCH_WATCHER, text);
+  }
+  
+  getGalleryPosition(){
+    return this._galleryPositon;
+  }
+  
+  setGalleryPosition(obj) {
+    this._galleryPositon = obj;
   }
 }

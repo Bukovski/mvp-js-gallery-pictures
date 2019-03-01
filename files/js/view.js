@@ -22,6 +22,13 @@ class GalleryView {
     this.$content.html(htmlList)
   }
   
+  getGalleryPictures() {
+    return this.$content.find(".gallery");
+  }
+  
+  getPicturesNumber(parent) {
+    return $(parent).find(".gallery__position").text();
+  }
 }
 
 
