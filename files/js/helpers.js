@@ -22,3 +22,8 @@ const validate = {
     return (value.replace(/[^а-я\w\s]*/gi, ""));
   }
 };
+
+const sorting = {
+  up: (field) => (a, b) => (a[field] < b[field]) ? -1 : (a[field] > b[field]) ? 1 : 0,
+  down: (field) => (a, b) => (a[field] > b[field]) ? -1 : (a[field] < b[field]) ? 1 : 0
+};

@@ -6,7 +6,7 @@ class GalleryModel {
     this._buttonSortOrder = "asc";
     this._textInputSearch = "";
     
-    this._galleryPositon = {};
+    this._galleryPositon = [];
   }
   
   readDataFromFiles() {

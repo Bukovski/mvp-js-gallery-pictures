@@ -26,8 +26,11 @@ class GalleryView {
     return this.$content.find(".gallery");
   }
   
-  getPicturesNumber(parent) {
-    return $(parent).find(".gallery__position").text();
+  changePositionAnimate(currentElement, first, second){
+    $(currentElement).animate({
+      left: (first.x - second.x),
+      top: (first.y - second.y)
+    });
   }
 }
 

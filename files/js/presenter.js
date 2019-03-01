@@ -25,54 +25,35 @@ class GalleryPresenter {
   
   initGalleryPicturesPosition() {
     const galleryPictures = this._view.getGalleryPictures();
-    const positionPicturesObj = {}; //{ 1: {x: 5, y: 5}, 2: {x: 255, y: 5}, 3: {x: 505, y: 5}... }
+    const positionPicturesObj = []; //[{category: ["1", "5"], title: "busy streets", x: 5, y: 5}, {category: ["2", "5"], title: "luminous night", x: 255, y: 5} ...]
     
     galleryPictures.each((index, wrapperDiv) => {
-      const position = {
+      const attributes = wrapperDiv.dataset;
+      
+      const wrapperDivInfo = {
+        category: attributes.category.split(","),
+        title: attributes.sort,
         x: wrapperDiv.offsetLeft,
         y: wrapperDiv.offsetTop
       };
       
-      positionPicturesObj[index] = position;
+      positionPicturesObj.push(wrapperDivInfo);
     });
     
     this._model.setGalleryPosition(positionPicturesObj);
   }
   
   async sortOrderGallery() {
-    const picturesCollection = await this._model.getPicturesCollection();
-    // const copyPicturesCollection = picturesCollection.slice(0);
-    
     const sortOrder = this._model.getButtonSortOrder();
-
-    const up = (a, b) => (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
-    const down = (a, b) => (a.name > b.name) ? -1 : (a.name < b.name) ? 1 : 0;
-    
-    picturesCollection.sort((sortOrder === "asc") ? up : down);
-    
     const picturesPosition = this._model.getGalleryPosition();
+    const copyPicturesPosition = picturesPosition.slice(0);
+    const galleryPictures = this._view.getGalleryPictures();
     
-    const change = (x1, x2) => x1 - x2;
-    const changePositionAnimate = (currentElement, first, second) => $(".gallery").eq(currentElement).animate({
-      left: change(first.x, second.x),
-      top: change(first.y, second.y)
-    });
+    picturesPosition.sort((sortOrder === "asc") ? sorting.up("title") : sorting.down("title"));
     
-    //присвоили к id позицию на которую нужно заменить
-    const newPosition = {};
-    
-    picturesCollection.forEach((elem, index) => {
-      const id = picturesCollection[index].id;
-      
-      newPosition[id] = picturesPosition[index]
-    });
-  
-    this._view.getGalleryPictures().each((index, elem) => {
-      changePositionAnimate(index, newPosition[index + 1], picturesPosition[index])
-      console.log(index, newPosition[index + 1], picturesPosition[index])
+    galleryPictures.each((index, elem) => {
+      this._view.changePositionAnimate(elem, picturesPosition[index], copyPicturesPosition[index])
     })
-    
-    
   }
   
   async buildGalleryPictures() {
@@ -80,8 +61,8 @@ class GalleryPresenter {
     
     this.initGalleryPicturesPosition();
     
-    this.sortOrderGallery();
-    // setTimeout(this.sortOrderGallery.bind(this), 2000);
+    // this.sortOrderGallery();
+    setTimeout(this.sortOrderGallery.bind(this), 2000);
   }
   
 }
