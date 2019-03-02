@@ -6,9 +6,7 @@ const PATH = {
 
 const EVENT = {
   ACTIVE_CLASS_BUTTON_FILTER: "ActiveClassButtonsFilter",
-  BUTTONS_SORT_ORDER: "ButtonsSortOrder",
   INPUT_SEARCH_WATCHER: "InputSearchWatcher",
-  BUTTON_SORT_SHUFFLE: "ButtonSortShuffle",
   SORT_ORDER_GALLERY: "SortOrderGallery",
 };
 

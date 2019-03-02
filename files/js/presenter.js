@@ -118,7 +118,6 @@ class ManagementPresenter {
   initListeners() {
     customEvents.registerListener(EVENT.ACTIVE_CLASS_BUTTON_FILTER);
     customEvents.registerListener(EVENT.INPUT_SEARCH_WATCHER);
-    customEvents.registerListener(EVENT.BUTTON_SORT_SHUFFLE); //TODO рандомная сортировка картинок но пока не подключена
   }
   
   async createButtonsFilter() {
