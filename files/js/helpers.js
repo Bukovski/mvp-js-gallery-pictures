@@ -9,6 +9,7 @@ const EVENT = {
   BUTTONS_SORT_ORDER: "ButtonsSortOrder",
   INPUT_SEARCH_WATCHER: "InputSearchWatcher",
   BUTTON_SORT_SHUFFLE: "ButtonSortShuffle",
+  SORT_ORDER_GALLERY: "SortOrderGallery",
 };
 
 const validate = {

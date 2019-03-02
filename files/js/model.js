@@ -3,7 +3,7 @@ class GalleryModel {
     this._categoryData = [];
     this._pictureData = [];
     this._buttonFilterIndex = 0;
-    this._buttonSortOrder = "asc";
+    this._buttonSortOrder = "";
     this._textInputSearch = "";
     
     this._galleryPositon = [];
@@ -39,6 +39,7 @@ class GalleryModel {
     this._buttonSortOrder = sortOrder;
   
     customEvents.runListener(EVENT.BUTTONS_SORT_ORDER);
+    customEvents.runListener(EVENT.SORT_ORDER_GALLERY);
   }
   
   getInputTextSearch() {

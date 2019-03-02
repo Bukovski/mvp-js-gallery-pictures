@@ -26,11 +26,25 @@ class GalleryView {
     return this.$content.find(".gallery");
   }
   
-  changePositionAnimate(currentElement, first, second){
+  changePositionAnimate(currentElement, moveLeft, moveTop){
     $(currentElement).animate({
-      left: (first.x - second.x),
-      top: (first.y - second.y)
+      left: moveLeft,
+      top: moveTop
     });
+  }
+  
+  hideBlockAnimate(currentElement){
+    $(currentElement).animate({
+      "margin-left": "-300px",
+      opacity: 0
+    }, 500);
+  }
+  
+  showBlockAnimate(currentElement){
+    $(currentElement).animate({
+      "margin-left": "5px",
+      opacity: 1
+    }, 500);
   }
 }
 

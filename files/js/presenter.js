@@ -7,6 +7,8 @@ class GalleryPresenter {
     this._model.readDataFromFiles();
   
     this.buildGalleryPictures();
+    
+    customEvents.registerListener(EVENT.SORT_ORDER_GALLERY);
   }
   
   async createListPicture() {
@@ -51,18 +53,51 @@ class GalleryPresenter {
     
     picturesPosition.sort((sortOrder === "asc") ? sorting.up("title") : sorting.down("title"));
     
+    console.log("picturesPosition", picturesPosition)
+    console.log("copyPicturesPosition", copyPicturesPosition)
+  
+    // console.log(copyPicturesPosition.find(item => item.title === picturesPosition[4].title))
+  
+    const newPositionData = {};
+    
+    picturesPosition.forEach((elem, index) => {
+      newPositionData[elem.title] = {
+        category: elem.category,
+        title: elem.title,
+        x: copyPicturesPosition[index].x - elem.x,
+        y: copyPicturesPosition[index].y - elem.y
+      }
+    });
+    
+    console.log(newPositionData)
+    
     galleryPictures.each((index, elem) => {
-      this._view.changePositionAnimate(elem, picturesPosition[index], copyPicturesPosition[index])
+      const key = newPositionData[$(elem).attr("data-sort")];
+      
+      this._view.changePositionAnimate(elem, key.x, key.y);
+      
+      console.log(elem, key.x, key.y)
+    })
+  }
+  
+  resetPosition() {
+    const galleryPictures = this._view.getGalleryPictures();
+    
+    galleryPictures.each((index, elem) => {
+      this._view.changePositionAnimate(elem, 0, 0)
     })
   }
   
   async buildGalleryPictures() {
     await this.createListPicture();
-    
-    this.initGalleryPicturesPosition();
-    
-    // this.sortOrderGallery();
-    setTimeout(this.sortOrderGallery.bind(this), 2000);
+  
+    customEvents.addListener(EVENT.SORT_ORDER_GALLERY, () => {
+      // this.initGalleryPicturesPosition();
+      // this.sortOrderGallery();
+      this.resetPosition();
+      setTimeout(this.initGalleryPicturesPosition.bind(this), 500);
+      setTimeout(this.sortOrderGallery.bind(this), 550);
+    });
   }
   
 }
