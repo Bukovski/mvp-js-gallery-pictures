@@ -51,13 +51,14 @@ class GalleryPresenter {
     const copyPicturesPosition = picturesPosition.slice(0);
     const galleryPictures = this._view.getGalleryPictures();
     
-    picturesPosition.sort((sortOrder === "asc") ? sorting.up("title") : sorting.down("title"));
+    if (sortOrder === "random") {
+      picturesPosition.sort(sorting.random);
+  
+      this._model.setGalleryPosition("");
+    } else {
+      picturesPosition.sort((sortOrder === "asc") ? sorting.up("title") : sorting.down("title"));
+    }
     
-    console.log("picturesPosition", picturesPosition)
-    console.log("copyPicturesPosition", copyPicturesPosition)
-  
-    // console.log(copyPicturesPosition.find(item => item.title === picturesPosition[4].title))
-  
     const newPositionData = {};
     
     picturesPosition.forEach((elem, index) => {
@@ -68,16 +69,15 @@ class GalleryPresenter {
         y: copyPicturesPosition[index].y - elem.y
       }
     });
+  
+    const positionGallery = (index, elem) => {
+      const dataAttr = $(elem).attr("data-sort");
+      const position = newPositionData[dataAttr];
     
-    console.log(newPositionData)
+      this._view.changePositionAnimate(elem, position.x, position.y);
+    };
     
-    galleryPictures.each((index, elem) => {
-      const key = newPositionData[$(elem).attr("data-sort")];
-      
-      this._view.changePositionAnimate(elem, key.x, key.y);
-      
-      console.log(elem, key.x, key.y)
-    })
+    galleryPictures.each(positionGallery)
   }
   
   resetPosition() {
@@ -92,8 +92,6 @@ class GalleryPresenter {
     await this.createListPicture();
   
     customEvents.addListener(EVENT.SORT_ORDER_GALLERY, () => {
-      // this.initGalleryPicturesPosition();
-      // this.sortOrderGallery();
       this.resetPosition();
       setTimeout(this.initGalleryPicturesPosition.bind(this), 500);
       setTimeout(this.sortOrderGallery.bind(this), 550);
@@ -119,7 +117,6 @@ class ManagementPresenter {
   
   initListeners() {
     customEvents.registerListener(EVENT.ACTIVE_CLASS_BUTTON_FILTER);
-    customEvents.registerListener(EVENT.BUTTONS_SORT_ORDER);
     customEvents.registerListener(EVENT.INPUT_SEARCH_WATCHER);
     customEvents.registerListener(EVENT.BUTTON_SORT_SHUFFLE); //TODO рандомная сортировка картинок но пока не подключена
   }
@@ -200,9 +197,7 @@ class ManagementPresenter {
   
   //press button shuffle
   toggleButtonSortShuffle(event) {
-    const currentButton = $(event.target);
-     //TODO Рандомное отображение картинок при клике на кнопку SHUFFLE
-    customEvents.runListener(EVENT.BUTTON_SORT_SHUFFLE);
+    this._model.setButtonSortOrder("random");
   }
   
   async buildButtonsFilter() {
@@ -216,9 +211,8 @@ class ManagementPresenter {
     this._view.bindToggleButtonShuffleSort(this.toggleButtonSortShuffle.bind(this));
   
     customEvents.addListener(EVENT.ACTIVE_CLASS_BUTTON_FILTER, () => this.toggleActiveClassButtonsFilter());
-    customEvents.addListener(EVENT.BUTTONS_SORT_ORDER, () => this.toggleActiveClassButtonsSortOrder());
+    customEvents.addListener(EVENT.SORT_ORDER_GALLERY, () => this.toggleActiveClassButtonsSortOrder());
     customEvents.addListener(EVENT.INPUT_SEARCH_WATCHER, (inputValue) => console.log("Тут могла быть ваша рекламма", inputValue)); //TODO При вводе данных в инпут дергаем отображение отфильрованных картинок. Запихнуть вызов перерисовки в callback
-    customEvents.addListener(EVENT.BUTTON_SORT_SHUFFLE, () => console.log("Опа чирик")); //TODO Рандомное отображение картинок при клике на кнопку SHUFFLE
   
   }
 }

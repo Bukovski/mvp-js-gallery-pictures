@@ -26,5 +26,6 @@ const validate = {
 
 const sorting = {
   up: (field) => (a, b) => (a[field] < b[field]) ? -1 : (a[field] > b[field]) ? 1 : 0,
-  down: (field) => (a, b) => (a[field] > b[field]) ? -1 : (a[field] < b[field]) ? 1 : 0
+  down: (field) => (a, b) => (a[field] > b[field]) ? -1 : (a[field] < b[field]) ? 1 : 0,
+  random: (a, b) => Math.random() - 0.5
 };

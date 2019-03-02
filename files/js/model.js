@@ -38,7 +38,6 @@ class GalleryModel {
     
     this._buttonSortOrder = sortOrder;
   
-    customEvents.runListener(EVENT.BUTTONS_SORT_ORDER);
     customEvents.runListener(EVENT.SORT_ORDER_GALLERY);
   }
   
