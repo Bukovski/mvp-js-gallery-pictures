@@ -28,7 +28,7 @@ class GalleryModel {
   setButtonFilterIndex(index) {
     this._buttonFilterIndex = index;
   
-    customEvents.runListener(EVENT.ACTIVE_CLASS_BUTTON_FILTER);
+    customEvents.runListener(EVENT.ACTIVE_FILTER_CATEGORY);
   }
   
   getButtonSortOrder() {
@@ -47,7 +47,7 @@ class GalleryModel {
   setInputTextSearch(text) {
     this._textInputSearch = text;
     
-    customEvents.runListener(EVENT.INPUT_SEARCH_WATCHER, text);
+    customEvents.runListener(EVENT.INPUT_SEARCH_FILTER);
   }
   
   getGalleryPosition(){

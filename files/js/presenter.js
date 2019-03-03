@@ -6,9 +6,14 @@ class GalleryPresenter {
   initialize() {
     this._model.readDataFromFiles();
   
+    this.initListeners();
     this.buildGalleryPictures();
-    
+  }
+  
+  initListeners() {
     customEvents.registerListener(EVENT.SORT_ORDER_GALLERY);
+    customEvents.registerListener(EVENT.ACTIVE_FILTER_CATEGORY);
+    customEvents.registerListener(EVENT.INPUT_SEARCH_FILTER);
   }
   
   async createListPicture() {
@@ -23,6 +28,44 @@ class GalleryPresenter {
     }, "");
     
     this._view.showListPictures(joinPictures);
+  }
+  
+  hideGalleryCategory() {
+    const galleryPictures = this._view.getGalleryPictures();
+    const category = this._model.getButtonFilterIndex();
+    
+    const hideRoles = (index, elem) => {
+      const categoryAttr = $(elem).attr("data-category");
+      
+      if (category === "0") {
+        this._view.showBlockAnimate(elem);
+      } else {
+        if (!categoryAttr.split(",").includes(category)) {
+          this._view.hideBlockAnimate(elem);
+        } else {
+          this._view.showBlockAnimate(elem);
+        }
+      }
+    };
+    
+    galleryPictures.each(hideRoles)
+  }
+  
+  hideGalleryFilter() {
+    const galleryPictures = this._view.getGalleryPictures();
+    const inputTextSearch = this._model.getInputTextSearch();
+    
+    const hideRoles = (index, elem) => {
+      const sortAttr = $(elem).attr("data-sort");
+      
+      if (!sortAttr.includes(inputTextSearch)) {
+        this._view.hideBlockAnimate(elem);
+      } else {
+        this._view.showBlockAnimate(elem);
+      }
+    };
+    
+    galleryPictures.each(hideRoles)
   }
   
   initGalleryPicturesPosition() {
@@ -88,41 +131,18 @@ class GalleryPresenter {
     })
   }
   
-  hideGallery() {
-    const galleryPictures = this._view.getGalleryPictures();
-    const category = this._model.getButtonFilterIndex();
-    
-    const hideRoles = (index, elem) => {
-      const categoryAttr = $(elem).attr("data-category");
-  
-      if (category === "0") {
-        this._view.showBlockAnimate(elem);
-      } else {
-        if (!categoryAttr.split(",").includes(category)) {
-          this._view.hideBlockAnimate(elem);
-        } else {
-          this._view.showBlockAnimate(elem);
-        }
-      }
-    };
-    
-    galleryPictures.each(hideRoles)
-  }
-  
   async buildGalleryPictures() {
     await this.createListPicture();
+    
+    customEvents.addListener(EVENT.ACTIVE_FILTER_CATEGORY, () => this.hideGalleryCategory());
+    customEvents.addListener(EVENT.INPUT_SEARCH_FILTER, () => this.hideGalleryFilter());
     
     customEvents.addListener(EVENT.SORT_ORDER_GALLERY, () => {
       this.resetPosition();
       setTimeout(this.initGalleryPicturesPosition.bind(this), 500);
       setTimeout(this.sortOrderGallery.bind(this), 550);
     });
-  
-    customEvents.addListener(EVENT.ACTIVE_CLASS_BUTTON_FILTER, () => {
-      this.hideGallery();
-    });
   }
-  
 }
 
 
@@ -136,13 +156,7 @@ class ManagementPresenter {
   initialize(presenter) {
     presenter.initialize();
     
-    this.initListeners();
     this.buildButtonsFilter();
-  }
-  
-  initListeners() {
-    customEvents.registerListener(EVENT.ACTIVE_CLASS_BUTTON_FILTER);
-    customEvents.registerListener(EVENT.INPUT_SEARCH_WATCHER);
   }
   
   async createButtonsFilter() {
@@ -203,6 +217,11 @@ class ManagementPresenter {
     }
   }
   
+  //press button shuffle
+  toggleButtonSortShuffle(event) {
+    this._model.setButtonSortOrder("random");
+  }
+  
   //search input filter article
   inputSearchChangeWatcher(event) {
     const input = $(event.target);
@@ -216,12 +235,7 @@ class ManagementPresenter {
       return input.val(inputValue.substr(0, maxLengthValue))
     }
     
-    this._model.setInputTextSearch(inputValue);
-  }
-  
-  //press button shuffle
-  toggleButtonSortShuffle(event) {
-    this._model.setButtonSortOrder("random");
+    this._model.setInputTextSearch(inputValue.toLowerCase());
   }
   
   async buildButtonsFilter() {
@@ -234,9 +248,7 @@ class ManagementPresenter {
     this._view.bindInputSearch(this.inputSearchChangeWatcher.bind(this));
     this._view.bindToggleButtonShuffleSort(this.toggleButtonSortShuffle.bind(this));
   
-    customEvents.addListener(EVENT.ACTIVE_CLASS_BUTTON_FILTER, () => this.toggleActiveClassButtonsFilter());
+    customEvents.addListener(EVENT.ACTIVE_FILTER_CATEGORY, () => this.toggleActiveClassButtonsFilter());
     customEvents.addListener(EVENT.SORT_ORDER_GALLERY, () => this.toggleActiveClassButtonsSortOrder());
-    customEvents.addListener(EVENT.INPUT_SEARCH_WATCHER, (inputValue) => console.log("Тут могла быть ваша рекламма", inputValue)); //TODO При вводе данных в инпут дергаем отображение отфильрованных картинок. Запихнуть вызов перерисовки в callback
-  
   }
 }

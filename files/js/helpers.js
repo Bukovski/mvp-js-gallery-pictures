@@ -5,9 +5,9 @@ const PATH = {
 };
 
 const EVENT = {
-  ACTIVE_CLASS_BUTTON_FILTER: "ActiveClassButtonsFilter",
-  INPUT_SEARCH_WATCHER: "InputSearchWatcher",
+  ACTIVE_FILTER_CATEGORY: "ActiveFilterCategory",
   SORT_ORDER_GALLERY: "SortOrderGallery",
+  INPUT_SEARCH_FILTER: "InputSearchFilter",
 };
 
 const validate = {
