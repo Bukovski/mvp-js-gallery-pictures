@@ -88,13 +88,38 @@ class GalleryPresenter {
     })
   }
   
+  hideGallery() {
+    const galleryPictures = this._view.getGalleryPictures();
+    const category = this._model.getButtonFilterIndex();
+    
+    const hideRoles = (index, elem) => {
+      const categoryAttr = $(elem).attr("data-category");
+  
+      if (category === "0") {
+        this._view.showBlockAnimate(elem);
+      } else {
+        if (!categoryAttr.split(",").includes(category)) {
+          this._view.hideBlockAnimate(elem);
+        } else {
+          this._view.showBlockAnimate(elem);
+        }
+      }
+    };
+    
+    galleryPictures.each(hideRoles)
+  }
+  
   async buildGalleryPictures() {
     await this.createListPicture();
-  
+    
     customEvents.addListener(EVENT.SORT_ORDER_GALLERY, () => {
       this.resetPosition();
       setTimeout(this.initGalleryPicturesPosition.bind(this), 500);
       setTimeout(this.sortOrderGallery.bind(this), 550);
+    });
+  
+    customEvents.addListener(EVENT.ACTIVE_CLASS_BUTTON_FILTER, () => {
+      this.hideGallery();
     });
   }
   
@@ -150,9 +175,9 @@ class ManagementPresenter {
     let indexButton = currentButton.attr("data-filter");
     
     if (!isActive) {
-      indexButton =  (indexButton === "all") ? 0 : indexButton;
+      indexButton =  (indexButton === "all") ? "0" : indexButton;
       
-      this._model.setButtonFilterIndex(indexButton);
+      this._model.setButtonFilterIndex(indexButton.toString());
     }
   }
   
