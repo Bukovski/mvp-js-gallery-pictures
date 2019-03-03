@@ -30,38 +30,23 @@ class GalleryPresenter {
     this._view.showListPictures(joinPictures);
   }
   
-  hideGalleryCategory() {
-    const galleryPictures = this._view.getGalleryPictures();
-    const category = this._model.getButtonFilterIndex();
-    
-    const hideRoles = (index, elem) => {
-      const categoryAttr = $(elem).attr("data-category");
-      
-      if (category === "0") {
-        this._view.showBlockAnimate(elem);
-      } else {
-        if (!categoryAttr.split(",").includes(category)) {
-          this._view.hideBlockAnimate(elem);
-        } else {
-          this._view.showBlockAnimate(elem);
-        }
-      }
-    };
-    
-    galleryPictures.each(hideRoles)
-  }
-  
   hideGalleryFilter() {
     const galleryPictures = this._view.getGalleryPictures();
     const inputTextSearch = this._model.getInputTextSearch();
+    const category = this._model.getButtonFilterIndex();
     
     const hideRoles = (index, elem) => {
       const sortAttr = $(elem).attr("data-sort");
+      const categoryAttr = $(elem).attr("data-category");
       
-      if (!sortAttr.includes(inputTextSearch)) {
-        this._view.hideBlockAnimate(elem);
+      if (sortAttr.includes(inputTextSearch)) {
+        if (categoryAttr.split(",").includes(category) || category === "0") {
+          this._view.showBlockAnimate(elem);
+        } else {
+          this._view.hideBlockAnimate(elem);
+        }
       } else {
-        this._view.showBlockAnimate(elem);
+        this._view.hideBlockAnimate(elem);
       }
     };
     
@@ -134,7 +119,7 @@ class GalleryPresenter {
   async buildGalleryPictures() {
     await this.createListPicture();
     
-    customEvents.addListener(EVENT.ACTIVE_FILTER_CATEGORY, () => this.hideGalleryCategory());
+    customEvents.addListener(EVENT.ACTIVE_FILTER_CATEGORY, () => this.hideGalleryFilter());
     customEvents.addListener(EVENT.INPUT_SEARCH_FILTER, () => this.hideGalleryFilter());
     
     customEvents.addListener(EVENT.SORT_ORDER_GALLERY, () => {

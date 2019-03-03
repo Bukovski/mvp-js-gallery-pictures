@@ -2,7 +2,7 @@ class GalleryModel {
   constructor() {
     this._categoryData = [];
     this._pictureData = [];
-    this._buttonFilterIndex = 0;
+    this._buttonFilterIndex = "0";
     this._buttonSortOrder = "";
     this._textInputSearch = "";
     
