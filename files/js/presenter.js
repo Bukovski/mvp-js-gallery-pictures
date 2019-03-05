@@ -34,13 +34,19 @@ class GalleryPresenter {
     const galleryPictures = this._view.getGalleryPictures();
     const inputTextSearch = this._model.getInputTextSearch();
     const category = this._model.getButtonFilterIndex();
-    
+    const sortOrder = this._model.getButtonSortOrder();
+  
+  
     const hideRoles = (index, elem) => {
       const sortAttr = $(elem).attr("data-sort");
       const categoryAttr = $(elem).attr("data-category");
       
       if (sortAttr.includes(inputTextSearch)) {
         if (categoryAttr.split(",").includes(category) || category === "0") {
+          if (sortOrder.length) {
+            $(elem).removeAttr("style");
+          }
+  
           this._view.showBlockAnimate(elem);
         } else {
           this._view.hideBlockAnimate(elem);
