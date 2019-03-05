@@ -35,18 +35,18 @@ class GalleryPresenter {
     const inputTextSearch = this._model.getInputTextSearch();
     const category = this._model.getButtonFilterIndex();
     const sortOrder = this._model.getButtonSortOrder();
-  
-  
+    
+    if (sortOrder.length) {
+      this._model.clearButtonSortOrder(); //delete active class from asc-desc button
+    }
+    
     const hideRoles = (index, elem) => {
       const sortAttr = $(elem).attr("data-sort");
       const categoryAttr = $(elem).attr("data-category");
       
       if (sortAttr.includes(inputTextSearch)) {
         if (categoryAttr.split(",").includes(category) || category === "0") {
-          if (sortOrder.length) {
-            $(elem).removeAttr("style");
-          }
-  
+          this._view.clearStyle(elem); //clear style current element before filtering
           this._view.showBlockAnimate(elem);
         } else {
           this._view.hideBlockAnimate(elem);
@@ -56,7 +56,7 @@ class GalleryPresenter {
       }
     };
     
-    galleryPictures.each(hideRoles)
+    galleryPictures.each(hideRoles);
   }
   
   initGalleryPicturesPosition() {
@@ -84,6 +84,8 @@ class GalleryPresenter {
     const picturesPosition = this._model.getGalleryPosition();
     const copyPicturesPosition = picturesPosition.slice(0);
     const galleryPictures = this._view.getGalleryPictures();
+    
+    console.log(picturesPosition)
     
     if (sortOrder === "random") {
       picturesPosition.sort(sorting.random);

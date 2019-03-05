@@ -46,6 +46,10 @@ class GalleryView {
       top: moveTop
     });
   }
+  
+  clearStyle(currentElement) {
+    $(currentElement).removeAttr("style");
+  }
 }
 
 

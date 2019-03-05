@@ -40,6 +40,9 @@ class GalleryModel {
   
     customEvents.runListener(EVENT.SORT_ORDER_GALLERY);
   }
+  clearButtonSortOrder() {
+    this.setButtonSortOrder("");
+  }
   
   getInputTextSearch() {
     return this._textInputSearch;
