@@ -25,14 +25,14 @@ class GalleryView {
     return this.$content.find(".gallery");
   }
   
-  hideBlockAnimate(currentElement){
+  hideBlockAnimate(currentElement) {
     $(currentElement).animate({
       "margin-left": "-300px",
       opacity: 0
     }, 500);
   }
   
-  showBlockAnimate(currentElement){
+  showBlockAnimate(currentElement) {
     $(currentElement).animate({
       "margin-left": "5px",
       opacity: 1

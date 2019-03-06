@@ -2,7 +2,7 @@ class GalleryModel {
   constructor() {
     this._categoryData = [];
     this._pictureData = [];
-    this._buttonFilterIndex = "0";
+    this._buttonFilterIndex = "all";
     this._textInputSearch = "";
   }
   
@@ -19,19 +19,19 @@ class GalleryModel {
     return await this._pictureData;
   }
   
-  getButtonFilterIndex() {
+  get buttonFilterIndex() {
     return this._buttonFilterIndex;
   }
-  setButtonFilterIndex(index) {
+  set buttonFilterIndex(index) {
     this._buttonFilterIndex = index;
   
     customEvents.runListener(EVENT.ACTIVE_FILTER_CATEGORY);
   }
   
-  getInputTextSearch() {
+  get inputTextSearch() {
     return this._textInputSearch;
   }
-  setInputTextSearch(text) {
+  set inputTextSearch(text) {
     this._textInputSearch = text;
     
     customEvents.runListener(EVENT.INPUT_SEARCH_FILTER);

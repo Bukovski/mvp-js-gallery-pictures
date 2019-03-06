@@ -31,22 +31,24 @@ class GalleryPresenter {
   
   hideGalleryFilter() {
     const galleryPictures = this._view.getGalleryPictures();
-    const inputTextSearch = this._model.getInputTextSearch();
-    const category = this._model.getButtonFilterIndex();
+    const inputTextSearch = this._model.inputTextSearch;
+    const category = this._model.buttonFilterIndex;
+    
+    const categoryInAttributes = (attributes, category) => attributes.split(",").includes(category);
     
     const hideRoles = (index, elem) => {
       const sortAttr = $(elem).attr("data-sort");
       const categoryAttr = $(elem).attr("data-category");
       
       if (sortAttr.includes(inputTextSearch)) {
-        if (categoryAttr.split(",").includes(category) || category === "0") {
-          this._view.showBlockAnimate(elem);
+        if (categoryInAttributes(categoryAttr, category) || category === "all") {
+          return this._view.showBlockAnimate(elem);
         } else {
-          this._view.hideBlockAnimate(elem);
+          return this._view.hideBlockAnimate(elem);
         }
-      } else {
-        this._view.hideBlockAnimate(elem);
       }
+      
+      this._view.hideBlockAnimate(elem);
     };
     
     galleryPictures.each(hideRoles);
@@ -87,7 +89,7 @@ class ManagementPresenter {
   
   //add active class for active button "filter category" after all buttons loaded
   addActiveClassButtonsFilter() {
-    const buttonIndex = this._model.getButtonFilterIndex();
+    const buttonIndex = this._model.buttonFilterIndex;
     
     this._view.addClassActiveButtonsFilter(buttonIndex);
   }
@@ -104,9 +106,7 @@ class ManagementPresenter {
     let indexButton = currentButton.attr("data-filter");
     
     if (!isActive) {
-      indexButton =  (indexButton === "all") ? "0" : indexButton;
-      
-      this._model.setButtonFilterIndex(indexButton.toString());
+      this._model.buttonFilterIndex = indexButton.toString();
     }
   }
   
@@ -123,7 +123,7 @@ class ManagementPresenter {
       return input.val(inputValue.substr(0, maxLengthValue))
     }
     
-    this._model.setInputTextSearch(inputValue.toLowerCase());
+    this._model.inputTextSearch = inputValue.toLowerCase();
   }
   
   async buildButtonsFilter() {
