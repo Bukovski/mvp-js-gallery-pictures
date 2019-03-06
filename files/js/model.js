@@ -3,10 +3,7 @@ class GalleryModel {
     this._categoryData = [];
     this._pictureData = [];
     this._buttonFilterIndex = "0";
-    this._buttonSortOrder = "";
     this._textInputSearch = "";
-    
-    this._galleryPositon = [];
   }
   
   readDataFromFiles() {
@@ -31,19 +28,6 @@ class GalleryModel {
     customEvents.runListener(EVENT.ACTIVE_FILTER_CATEGORY);
   }
   
-  getButtonSortOrder() {
-    return this._buttonSortOrder;
-  }
-  setButtonSortOrder(sortOrder) {
-    
-    this._buttonSortOrder = sortOrder;
-  
-    customEvents.runListener(EVENT.SORT_ORDER_GALLERY);
-  }
-  clearButtonSortOrder() {
-    this.setButtonSortOrder("");
-  }
-  
   getInputTextSearch() {
     return this._textInputSearch;
   }
@@ -51,13 +35,5 @@ class GalleryModel {
     this._textInputSearch = text;
     
     customEvents.runListener(EVENT.INPUT_SEARCH_FILTER);
-  }
-  
-  getGalleryPosition(){
-    return this._galleryPositon;
-  }
-  
-  setGalleryPosition(obj) {
-    this._galleryPositon = obj;
   }
 }

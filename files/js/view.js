@@ -1,7 +1,6 @@
 class GalleryView {
-  constructor(template) {
+  constructor() {
     this.$content = $(".content");
-    
   }
   
   itemListGallery(imageObj) {
@@ -39,28 +38,13 @@ class GalleryView {
       opacity: 1
     }, 500);
   }
-  
-  changePositionAnimate(currentElement, moveLeft, moveTop){
-    $(currentElement).animate({
-      left: moveLeft,
-      top: moveTop
-    });
-  }
-  
-  clearStyle(currentElement) {
-    $(currentElement).removeAttr("style");
-  }
 }
-
 
 
 class ManagementView {
   constructor() {
     this.$filter = $(".filter");
-    this.$sortOrderGrid = $(".sort__grid");
-    this.$sortOrderButton = $(".sort__button");
     this.$searchInput = $(".sort__search");
-    this.$sortShuffle = $(".sort__shuffle");
   }
   
   valueButtonFilter(value, count) {
@@ -89,25 +73,7 @@ class ManagementView {
     this.$filter.on("click", ".filter__button", callback)
   }
   
-  addClassActiveButtonsOrderSort(order) {
-    this.$sortOrderGrid.find(`.sort__button[data-order="${ order }"]`)
-      .addClass("sort__button--active");
-  }
-  
-  removeClassActiveButtonsOrderSort() {
-    this.$sortOrderGrid.find(".sort__button--active")
-      .removeClass("sort__button--active");
-  }
-  
-  bindToggleButtonsOrderSort(callback) {
-    this.$sortOrderButton.on("click", callback)
-  }
-  
   bindInputSearch(callback) {
     this.$searchInput.on("input", callback)
-  }
-  
-  bindToggleButtonShuffleSort(callback) {
-    this.$sortShuffle.on("click", callback);
   }
 }

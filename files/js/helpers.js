@@ -6,14 +6,10 @@ const PATH = {
 
 const EVENT = {
   ACTIVE_FILTER_CATEGORY: "ActiveFilterCategory",
-  SORT_ORDER_GALLERY: "SortOrderGallery",
   INPUT_SEARCH_FILTER: "InputSearchFilter",
 };
 
 const validate = {
-  isSortOrder(text) {
-    return [ "asc", "desc" ].includes(text)
-  },
   isTextAndNumbers(value) {
     return (/^[а-я\w\s]*$/gi.test(value));
   },

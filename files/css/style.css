@@ -85,40 +85,13 @@ body {
 .sort {
   margin-top: 7px;
 }
-.sort__shuffle {
-  background: var(--yellowLight);
-  color: var(--white);
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: .25s;
+.sort__text {
+  position: relative;
+  top: 4px;
+  font-size: 21px;
+  color: var(--grey);
+  font-weight: 600;
 }
-.sort__shuffle:hover {
-  background-color: var(--yellowDark);
-}
-
-.sort__grid {
-  display: inline-block;
-  padding: 0;
-  margin: 0 5px;
-}
-.sort__button {
-  display: inline-block;
-  padding: 10px 20px;
-  border-right: 1px solid #000;
-  list-style-type: none;
-  background: var(--redLight);
-  color: var(--white);
-  cursor: pointer;
-  transition: .25s;
-}
-.sort__button:hover,
-.sort__button--active {
-  background-color: var(--redDark);
-}
-
 .sort__search {
   padding: 10px;
   padding-right: 45px;
