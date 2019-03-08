@@ -3,7 +3,7 @@ class GalleryView {
     this.$content = $(".content");
   }
   
-  itemListGallery(imageObj) {
+  itemGallery(imageObj) {
     const { path, name, id, category, dataSort } = imageObj;
     
     return `<div class="gallery" data-category="${ category }" data-sort="${ dataSort }">
@@ -13,8 +13,8 @@ class GalleryView {
     </div>`
   }
   
-  createListPictures(dataObj) {
-    return this.itemListGallery(dataObj)
+  createPictures(dataObj) {
+    return this.itemGallery(dataObj)
   }
   
   showListPictures(htmlList) {

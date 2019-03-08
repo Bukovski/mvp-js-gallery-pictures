@@ -23,7 +23,7 @@ class GalleryPresenter {
       picture.path = PATH.IMAGE + picture.path;
       picture.dataSort = picture.name.toLowerCase();
       
-      return prev += this._view.createListPictures(picture)
+      return prev += this._view.createPictures(picture)
     }, "");
     
     this._view.showListPictures(joinPictures);
