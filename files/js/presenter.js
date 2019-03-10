@@ -23,7 +23,7 @@ class GalleryPresenter {
       picture.path = PATH.IMAGE + picture.path;
       picture.dataSort = picture.name.toLowerCase();
       
-      return prev += this._view.createPictures(picture)
+      return prev += this._view.templateGallery(picture)
     }, "");
     
     this._view.showListPictures(joinPictures);
@@ -40,12 +40,13 @@ class GalleryPresenter {
       const sortAttr = $(elem).attr("data-sort");
       const categoryAttr = $(elem).attr("data-category");
       
-      if (sortAttr.includes(inputTextSearch)) {
-        if (categoryInAttributes(categoryAttr, category) || category === "all") {
-          return this._view.showBlockAnimate(elem);
-        } else {
-          return this._view.hideBlockAnimate(elem);
-        }
+      if (!sortAttr.includes(inputTextSearch)) {
+        this._view.hideBlockAnimate(elem);
+        return;
+      }
+      if (categoryInAttributes(categoryAttr, category) || category === "all") {
+        this._view.showBlockAnimate(elem);
+        return;
       }
       
       this._view.hideBlockAnimate(elem);
@@ -78,10 +79,10 @@ class ManagementPresenter {
   
   async createButtonsFilter() {
     const categories = await this._model.getCategoryCollection();
-    let listHtml = this._view.createListButtonsFilter("All", "all"); //static first button for show all categories
+    let listHtml = this._view.templateButtonFilter("All", "all"); //static first button for show all categories
     
     categories.forEach(category => {
-      return listHtml += this._view.createListButtonsFilter(category.categoryName, category.id)
+      return listHtml += this._view.templateButtonFilter(category.categoryName, category.id)
     });
     
     this._view.showButtonsFilter(listHtml);

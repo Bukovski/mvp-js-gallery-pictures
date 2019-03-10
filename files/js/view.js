@@ -3,7 +3,7 @@ class GalleryView {
     this.$content = $(".content");
   }
   
-  itemGallery(imageObj) {
+  templateGallery(imageObj) {
     const { path, name, id, category, dataSort } = imageObj;
     
     return `<div class="gallery" data-category="${ category }" data-sort="${ dataSort }">
@@ -11,10 +11,6 @@ class GalleryView {
       <div class="gallery__position">${ id }</div>
       <span class="gallery__title">${ name }</span>
     </div>`
-  }
-  
-  createPictures(dataObj) {
-    return this.itemGallery(dataObj)
   }
   
   showListPictures(htmlList) {
@@ -47,12 +43,8 @@ class ManagementView {
     this.$searchInput = $(".sort__search");
   }
   
-  valueButtonFilter(value, count) {
+  templateButtonFilter(value, count) {
     return `<li class="filter__button" data-filter="${ count }">${ value }</li>`;
-  }
-  
-  createListButtonsFilter(value, count) {
-    return this.valueButtonFilter(value, count);
   }
   
   showButtonsFilter(htmlList) {
@@ -65,7 +57,7 @@ class ManagementView {
   }
   
   addClassActiveButtonsFilter(index) {
-    this.$filter.find(".filter__button").eq(index)
+    this.$filter.find(`.filter__button[data-filter=${ index }]`)
       .addClass("filter__button--active");
   }
   
